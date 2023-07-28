@@ -1,5 +1,6 @@
-# Halloween-Theme-Wallpaper
-
+<p align="center">
+    <h1>Halloween-Theme-Wallpaper<h1>
+</p>
 <p align="center">
     <img src="/static/img/imagen.png" width="300px" height="300px">
 </p>
