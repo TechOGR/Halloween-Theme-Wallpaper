@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-image: url("../img/fondo.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #202020;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.content_btn {
+    position: relative;
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-wrap: wrap;
+    margin-left: 20px;
+    row-gap: 20px;
+    column-gap: 60px;
+}
+
+.btn {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+h1 {
+    display: inline;
+    font-family: "Viner Hand ITC";
+    font-size: 80px;
+    cursor: pointer;
+    color: #000000;
+    text-shadow: 0 0 5px #202020,
+        0 0 5px #1d1d1d,
+        0 0 5px #151515,
+        0 0 5px #262626;
+}
+
+h1:hover {
+    font-size: 85px;
+    color: white;
+}
+
+h1::selection {
+    color: #303030;
+    background-color: transparent;
+}
+
+.trashbin {
+    position: absolute;
+    cursor: pointer;
+    left: 80%;
+    top: 85%;
+    z-index: -1;
+}
+
+.trashbin:hover {
+    font-size: 80px;
+    color: #ffffff;
+}
+
+#cuadro {
+    background-image: url("../img/imagen.png");
+    background-size: cover;
+    width: 400px;
+    height: 390px;
+    background-color: transparent;
+    position: absolute;
+    top: 45%;
+    left: 78%;
+}
+
+.cuadro_dos {
+    width: 550px;
+    height: 200px;
+    background-image: url("../img/bruja.png");
+    transform: rotate(180deg);
+    background-size: cover;
+    position: absolute;
+    top: calc(100% - 200px);
+    left: -570px;
+    animation: volar 5s linear;
+}
+
+/* Apartado de animaciones */
+
+@keyframes animation_trash {
+
+    0%,
+    40%,
+    100% {}
+
+    20% {
+        transform: translateY(-10px);
+        color: red;
+    }
+}
+
+@keyframes empty_trash {
+
+    0%,
+    40%,
+    100% {}
+
+    20% {
+        transform: translateX(-10px);
+    }
+
+    60% {
+        transform: translateX(10px);
+    }
+}
+
+@keyframes programs_animation {
+
+    0%,
+    40%,
+    100% {}
+
+    20% {
+        transform: scale(1.1, 1.1);
+    }
+}
+
+@keyframes volar {
+    0% {
+        transform: translateX(0px);
+    }
+
+    50% {}
+
+    100% {
+        transform: translateX(calc(100% + 1550px));
+    }
+}

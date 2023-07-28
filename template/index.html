@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/style.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/reloj.css')}}"
+    />
+    <script defer src="{{url_for('static', filename='js/script.js')}}"></script>
+    <script
+      defer
+      src="{{url_for('static', filename='js/control_trash.js')}}"
+    ></script>
+    <script defer src="{{url_for('static', filename='js/reloj.js')}}"></script>
+    <!-- <script
+      defer
+      src="{{url_for('static', filename='js/control_programs.js')}}"
+    ></script> -->
+    <script
+      defer
+      src="{{url_for('static', filename='js/ctrl_bruja.js')}}"
+    ></script>
+    <script
+      defer
+      src="{{url_for('static', filename='js/ctrl_fear.js')}}"
+    ></script>
+    <title>Start</title>
+  </head>
+  <body>
+    <div id="cuadro"></div>
+    <div class="content_btn">
+      <div class="btn qt_designer">
+        <h1 class="qt_designer">Qt</h1>
+      </div>
+      <div class="btn figma">
+        <h1 class="figma">Fg</h1>
+      </div>
+      <div class="btn hide">
+        <h1 class="hide">Me</h1>
+      </div>
+      <div class="btn vscode">
+        <h1 class="vscode">Vc</h1>
+      </div>
+      <div class="btn idea">
+        <h1 class="idea">Ii</h1>
+      </div>
+      <div class="btn aimp">
+        <h1 class="aimp">Ap</h1>
+      </div>
+      <div class="btn chrome">
+        <h1 class="chrome">Gc</h1>
+      </div>
+      <div class="btn android">
+        <h1 class="android">As</h1>
+      </div>
+      <div class="btn explorer">
+        <h1 class="explorer">Ex</h1>
+      </div>
+    </div>
+    <h2 id="reloj">00 : 00 : 00</h2>
+    <div class="trash">
+      <h1 class="trashbin">Trash</h1>
+    </div>
+  </body>
+</html>

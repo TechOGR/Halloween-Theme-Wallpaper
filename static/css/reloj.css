@@ -1,0 +1,28 @@
+#reloj {
+    position: absolute;
+    display: inline;
+    top: 0;
+    left: 45%;
+    font-family: "Osake";
+    font-size: 50px;
+    /* color: rgb(207, 0, 0); */
+    /* text-shadow: 0 0 10px rgb(49, 49, 49),
+        0 0 5px rgb(29, 29, 29),
+        0 0 5px red,
+        0 0 5px rgb(65, 65, 65); */
+    color: #000;
+    text-shadow: 0 0 5px #202020,
+        0 0 5px #1d1d1d,
+        0 0 5px #151515,
+        0 0 5px #262626;
+    cursor: pointer;
+}
+
+#reloj:hover {
+    color: #fff;
+}
+
+#reloj::selection {
+    color: #000;
+    background-color: transparent;
+}
