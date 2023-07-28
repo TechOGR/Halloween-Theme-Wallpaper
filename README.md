@@ -8,6 +8,5 @@
 
 # Requisitos
 
-
 # Redes Sociales
 <a href="https://www.youtube.com/@OnelCrack"><img src="/static/img/socials/YouTube.png" width="50px" height="50px"></img></a><a href="https://www.facebook.com/profile.php?id=100092376152191"><img src="/static/img/socials/Facebook.png" width="50px" height="50px"></img></a><a href=""><img src="/static/img/socials/Instagram.png" width="50px" height="50px"></a>
