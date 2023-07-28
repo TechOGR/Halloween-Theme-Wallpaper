@@ -10,19 +10,20 @@
 
 <img alt="Static Badge" src="https://img.shields.io/badge/follow-me-red?style=plastic&color=%23181818&link=https%3A%2F%2Fwww.youtube.com%2F%40OnelCrack">
 
-### 1- Instalar Python en su PC, valla a la pagina oficial y descarguelo e instalelo.
+### 1- Descargue este Repositorio
+> git clone https://github.com/TechOGR/Halloween-Theme-Wallpaper
+
+### 2- Instalar Python en su PC, valla a la pagina oficial y descarguelo e instalelo.
 [Web Oficial](https://www.python.org/downloads/)
 * Luego de instalarlo abre el CMD y ejecuta el siguiente comando:
 > pip install requirements.txt
 
-### 2- Instala Lively Wallpaper 
+### 3- Instala Lively Wallpaper 
 <li> Desde la Microsoft Store </li>
 <li> Desde Uptodown https://lively-wallpaper.en.uptodown.com/windows/download </li>
 
----
-
-### 3- Descargue este Repositorio
-> git clone https://github.com/TechOGR/Halloween-Theme-Wallpaper
+> Si quiere que el fondo de pantalla se ejecute en el inicio de Windows, copie el archivo 'open.bat' a la carpeta "C:/Windows" de su sistema
+> Luego le da click derecho sobre el y click en Editar, y siga los pasos escritos en el.
 
 ---
 
