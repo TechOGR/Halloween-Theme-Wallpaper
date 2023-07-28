@@ -11,7 +11,7 @@ from os import (
 from threading import Thread
 from module.url_programs import open_program
 from module.info_recycle import check_state_recycle_bin
-from module.check_process import en_ejecucion
+# from module.check_process import en_ejecucion Pronto se detectará el proceso de ejecucíon del programa
 from module.sonidos import (
     sonido_bruja,
     sonido_grito
