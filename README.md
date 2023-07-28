@@ -12,7 +12,8 @@
 
 ### 1- Instalar Python en su PC, valla a la pagina oficial y descarguelo e instalelo.
 [Web Oficial](https://www.python.org/downloads/)
-> Instale los requisitos necesarios con 'pip install -r requirements.txt'
+* Luego de instalarlo abre el CMD y ejecuta el siguiente comando:
+> pip install requirements.txt
 
 ### 2- Instala Lively Wallpaper 
 <li> Desde la Microsoft Store </li>
