@@ -11,7 +11,7 @@
 <img alt="Static Badge" src="https://img.shields.io/badge/follow-me-red?style=plastic&color=%23181818&link=https%3A%2F%2Fwww.youtube.com%2F%40OnelCrack">
 
 ### 1- Instalar Python en su PC, valla a la pagina oficial y descarguelo e instalelo.
-> Web Oficial https://www.python.org/downloads/
+[Web Oficial](https://www.python.org/downloads/)
 > Instale los requisitos necesarios con 'pip install -r requirements.txt'
 
 ### 2- Instala Lively Wallpaper 
