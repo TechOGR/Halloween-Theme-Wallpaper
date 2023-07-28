@@ -9,8 +9,9 @@
 ---
 
 # Requisitos
-
-<img alt="Static Badge" src="https://img.shields.io/badge/follow-me-red?style=plastic&color=%23181818&link=https://www.youtube.com/@OnelCrack">
+<p align="center">
+    <a href="www.google.com"><img alt="Static Badge" src="https://img.shields.io/badge/follow-me-red?style=plastic&color=%23181818&link=https%3A%2F%2Fwww.youtube.com%2F%40OnelCrack"></a>
+</p>
 
 ### 1- Descargue este Repositorio
 > git clone https://github.com/TechOGR/Halloween-Theme-Wallpaper
