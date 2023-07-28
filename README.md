@@ -3,13 +3,14 @@
 <p align="center">
     <img src="/static/img/imagen.png" width="300px" height="300px">
 </p>
+
 ## Esto es, digamos que un fondo de pantalla interactivo para tu PC Windows
 
 ---
 
 # Requisitos
 
-<img alt="Static Badge" src="https://img.shields.io/badge/follow-me-red?style=plastic&color=%23181818&link=https%3A%2F%2Fwww.youtube.com%2F%40OnelCrack">
+<img alt="Static Badge" src="https://img.shields.io/badge/follow-me-red?style=plastic&color=%23181818&link=https://www.youtube.com/@OnelCrack">
 
 ### 1- Descargue este Repositorio
 > git clone https://github.com/TechOGR/Halloween-Theme-Wallpaper
