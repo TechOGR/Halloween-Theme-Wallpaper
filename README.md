@@ -5,7 +5,7 @@
     <img src="/static/img/imagen.png" width="300px" height="300px">
 </p>
 
-## Esto es, digamos que un fondo de pantalla interactivo para tu PC Windows
+## Esto es, digamos que un fondo de pantalla interactivo para tu PC Windows, digo interactivo porque puede personalizar los accesos directos a sus programas preferidos.
 
 ---
 
