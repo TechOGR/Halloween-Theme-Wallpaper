@@ -1,7 +1,8 @@
 # Halloween-Theme-Wallpaper
 
-<img src="/static/img/imagen.png" width="300px" height="300px" align="center">
-
+<p align="center">
+    <img src="/static/img/imagen.png" width="300px" height="300px">
+</p>
 ## Esto es, digamos que un fondo de pantalla interactivo para tu PC Windows
 
 ---
