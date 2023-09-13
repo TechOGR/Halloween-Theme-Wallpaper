@@ -34,7 +34,7 @@ setInterval(async () => {
                     document.body.style.backgroundPosition = "fixed"
                     document.body.style.backgroundRepeat = "no-repeat"
                 }, 500)
-                
+
             } else {
                 los_div.forEach((elemento) => {
                     elemento.style.display = "flex";

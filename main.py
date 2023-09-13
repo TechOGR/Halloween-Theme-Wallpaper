@@ -6,27 +6,33 @@ from flask import (
     send_from_directory
 )
 from os import (
-    path
+    path,
+    getcwd
+)
+from pyautogui import (
+    hotkey
 )
 from threading import Thread
-from module.url_programs import open_program
+from module.url_programs import Programs
 from module.info_recycle import check_state_recycle_bin
-from module.check_process import en_ejecucion
 from module.sonidos import (
     sonido_bruja,
     sonido_grito
 )
 
 import socket
+import sys
 
 # Clase Principal
 class Main:
     
     # Constructor
     def __init__(self):
-        self.full_path = path.join(path.dirname(__file__))
-        self.path_template = path.join(path.dirname(__file__),"template")
-        self.path_static = path.join(path.dirname(__file__),"static")
+        
+        self.full_path = getcwd()
+        self.path_template = path.join(getcwd(),"template")
+        self.path_static = path.join(getcwd(),"static")
+        print(self.full_path, self.path_template, self.path_static)
 
         self.sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         
@@ -39,8 +45,9 @@ class Main:
         
         self.rutas()
         
-    def init_server(self):
+        self.instance_programs = Programs()
         
+    def init_server(self):
         self.app.run("localhost",80)
         
     # Definiendo las rutas Webs
@@ -63,7 +70,7 @@ class Main:
             
             self.nombre_programa = name_program
             
-            open_program(name_program)
+            self.instance_programs.open_program(name_program)
             
             return "ok";
         
@@ -128,9 +135,11 @@ class Main:
             
             if data.endswith("Activar"):
                 open(path.join(self.full_path,"archivo.txt"),"w").write(data[2:])
+                hotkey("win", "m")
+                
                 
 # Metodo Main    
 if __name__ == "__main__":
     m = Main()
+    sys.stdout = open("./stdout.txt", "w")
     m.init_server()
-    
