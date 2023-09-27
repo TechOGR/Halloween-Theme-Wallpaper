@@ -1,3 +1,0 @@
-No se mostrará la notificación
- * Serving Flask app 'main'
- * Debug mode: off
