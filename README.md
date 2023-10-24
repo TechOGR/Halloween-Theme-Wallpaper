@@ -26,9 +26,6 @@
 <li> Desde la Microsoft Store </li>
 <li> Desde Uptodown https://lively-wallpaper.en.uptodown.com/windows/download </li>
 
-> Si quiere que el fondo de pantalla se ejecute en el inicio de Windows, copie el archivo 'open.bat' a la carpeta "C:/Windows" de su sistema
-> Luego le da click derecho sobre el y click en Editar, y siga los pasos escritos en el.
-
 ---
 
 # Redes Sociales
