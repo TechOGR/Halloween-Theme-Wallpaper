@@ -12,6 +12,7 @@ def sonido_bruja(main_dir):
     sd.wait()
     
 def sonido_grito(main_dir):
+
     path_sonido = path.join(main_dir, "sounds","grito.mp3")
     
     data, rates = sf.read(path_sonido)

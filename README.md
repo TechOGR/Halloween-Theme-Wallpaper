@@ -5,7 +5,7 @@
     <img src="/static/img/imagen.png" width="300px" height="300px">
 </p>
 
-## Esto es, digamos que un fondo de pantalla interactivo para tu PC Windows, digo interactivo porque puede personalizar los accesos directos a sus programas preferidos.
+## Esto es, digamos que un fondo de pantalla interactivo para tu PC Windows, digo interactivo porque puede personalizar los accesos directos a sus programas preferidos. Dato Curioso. Buajaja es una broma.
 
 ---
 
@@ -14,17 +14,13 @@
     <a href="https://www.youtube.com/@OnelCrack"><img alt="Static Badge" src="https://img.shields.io/badge/follow-me-red?style=plastic&color=%23181818&link=https%3A%2F%2Fwww.youtube.com%2F%40OnelCrack"></a>
 </p>
 
-### 1- Descargue este Repositorio
-> git clone https://github.com/TechOGR/Halloween-Theme-Wallpaper
+### 1- Tener Instalado Lively Wallpaper enlace oficial 👇
+> https://apps.microsoft.com/detail/9ntm2qc6qws7?hl=es-uy&gl=UY
 
-### 2- Instalar Python en su PC, valla a la pagina oficial y descarguelo e instalelo.
-[Web Oficial](https://www.python.org/downloads/)
-* Luego de instalarlo abre el CMD y ejecuta el siguiente comando:
-> pip install requirements.txt
+### 2- Descargar el programa, link 👇
+[Link medio directo]("")
 
-### 3- Instala Lively Wallpaper 
-<li> Desde la Microsoft Store </li>
-<li> Desde Uptodown https://lively-wallpaper.en.uptodown.com/windows/download </li>
+### 3- Tener un hermano/a o familiar a quien hacerle la broma :)
 
 ---
 
@@ -33,4 +29,4 @@
 <a href="https://twitter.com/Onel_Crack?t=NFwmb3M7Gb8dr-B9oUubaw&s=09"><img src="/static/img/socials/twitter.png" width="50px" height="50px"></a>
 
 # Video Explicativo en YouTube
-[Coming...]()
+[Coming...]("")

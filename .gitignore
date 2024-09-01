@@ -5,3 +5,5 @@ Halloween_Wallpaper.spec
 log.txt
 open.bat
 stdout.txt
+__pycache__
+__pycache__/*

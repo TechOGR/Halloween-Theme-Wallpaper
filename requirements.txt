@@ -1,2 +1,6 @@
-flask==2.3.2
+flask==3.0.3
 winotify==1.1.0
+pyautogui==0.9.54
+sounddevice==0.5.0
+soundfile==0.12.1
+numpy==2.1.0

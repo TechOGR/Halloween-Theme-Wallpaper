@@ -2,6 +2,7 @@ from winotify import (
     Notification,
     audio
 )
+
 from os import (
     system
 )
@@ -69,11 +70,18 @@ class Programs:
         )
         welcome = Notification(
             app_id="Halloween Wallpaper",
-            title="Bienvenida 👿",
-            msg="Bienvenido al centro de aquí mismo.",
+            title="Bienvenido/a 👿",
+            msg="Esta será una bonita aventura, jejeje",
             icon="D:\\Fotos\\Iconos_Programas\\trashempty2.png",
-            duration="short"
+            duration="short",
         )
+        objetRedes = {
+            "Youtube": "https://www.youtube.com/@OnelCrack",
+            "Instagram": "https://www.instagram.com/onel_crack/",
+            "GitHub": "https://www.github.com/TechOGR"
+        }
+        for i, v in objetRedes.items():
+            welcome.add_actions(label=i, launch=v)
         
         if check_state_recycle_bin and self.flag == 0:
             notificacion.set_audio(audio.SMS,loop=False)
