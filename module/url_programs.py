@@ -47,8 +47,9 @@ class Programs:
             case 'android':
                 Popen(["C:\Program Files\Android\Android Studio\\bin\studio64.exe".replace("\\","\\\\")])
             case 'trashbin':
+                system('PowerShell -Command "Clear-RecycleBin -Confirm:$false"')
                 # Popen(["powershell","-Command", "Clear-RecycleBin", "-Confirm:$false", "-Force"])
-                system("rd /s /q C:\\$Recycle.Bin")
+                # system("rd /s /q C:\\$Recycle.Bin")
                 self.mostrar_notificacion()
             case 'blender':
                 Popen(["C:\Program Files\Blender Foundation\Blender 3.6\\blender-launcher.exe".replace("\\","\\\\")])

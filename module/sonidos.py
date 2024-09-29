@@ -19,3 +19,11 @@ def sonido_grito(main_dir):
     
     sd.play(data,rates)
     sd.wait()
+    
+def sonido_error(main_dir):
+    path_sonido = path.join(main_dir, "sounds", "error.mp3")
+    
+    data, rates = sf.read(path_sonido)
+    
+    sd.play(data, rates)
+    sd.wait()

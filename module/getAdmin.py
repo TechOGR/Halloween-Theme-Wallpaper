@@ -1,16 +1,16 @@
 import ctypes, sys
 
-class ExecuteAsAdmin:
-    def __init__(self) -> None:
-        self.isAdmin()
-        self.getAdmin()
-    
-    def isAdmin(self):
-        try:
-            return ctypes.windll.shell32.IsUserAdmin()
-        except:
-            return False
-        
-    def getAdmin(self):
-        if not self.isAdmin():
-            ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+def is_admin():
+    """Check if the script is running with admin privileges."""
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+def run_as_admin():
+    """Rerun the script as admin."""
+    if not is_admin():
+        # Get the current script file path
+        script = sys.argv[0]
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, script, None, 1)
+        sys.exit()

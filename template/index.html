@@ -18,10 +18,6 @@
       src="{{url_for('static', filename='js/control_trash.js')}}"
     ></script>
     <script defer src="{{url_for('static', filename='js/reloj.js')}}"></script>
-    <!-- <script
-      defer
-      src="{{url_for('static', filename='js/control_programs.js')}}"
-    ></script> -->
     <script
       defer
       src="{{url_for('static', filename='js/ctrl_bruja.js')}}"
@@ -34,47 +30,24 @@
   </head>
   <body>
     <div id="cuadro"></div>
-    <div class="content_btn">
-      <div class="btn qt_designer">
-        <h1 class="qt_designer">Qt</h1>
-      </div>
-      <div class="btn figma">
-        <h1 class="figma">Fg</h1>
-      </div>
-      <div class="btn hide">
-        <h1 class="hide">Me</h1>
-      </div>
-      <div class="btn vscode">
-        <h1 class="vscode">Vc</h1>
-      </div>
-      <div class="btn idea">
-        <h1 class="idea">Ii</h1>
-      </div>
-      <div class="btn aimp">
-        <h1 class="aimp">Ap</h1>
-      </div>
-      <div class="btn chrome">
-        <h1 class="chrome">Gc</h1>
-      </div>
-      <div class="btn android">
-        <h1 class="android">As</h1>
-      </div>
-      <div class="btn explorer">
-        <h1 class="explorer">Ex</h1>
-      </div>
-      <div class="btn blender">
-        <h1 class="blender">Bd</h1>
-      </div>
-      <div class="btn U_F">
-        <h1 class="U_F">Du</h1>
-      </div>
-      <div class="btn tunes">
-        <h1 class="tunes">iT</h1>
-      </div>
+    <div class="content_btn" id="program-buttons">
+      <!-- Botones de programas se generarán dinámicamente aquí -->
     </div>
     <h2 id="reloj">00 : 00 : 00</h2>
     <div class="trash">
       <h1 class="trashbin">Trash</h1>
     </div>
+
+    <!-- Formulario para editar nombres y guardar cambios 
+    <div id="edit-program" style="display: none">
+      <h3>Edit Program Name</h3>
+      <input type="text" id="program-name" placeholder="Enter new name" />
+      <button id="save-button">Save</button>
+    </div>-->
+
+    <script
+      defer
+      src="{{url_for('static', filename='js/programs.js')}}"
+    ></script>
   </body>
 </html>

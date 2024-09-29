@@ -1,9 +1,7 @@
+import os
 from flask import (
     Flask,
-    render_template,
-    request,
     json,
-    send_from_directory
 )
 from os import (
     path,
@@ -14,16 +12,18 @@ from pyautogui import (
 )
 from threading import Thread
 from module.url_programs import Programs
-from module.serverTCP import TCPServer
 from module.router import rutas
+from module.getAdmin import run_as_admin
 from PyQt5.QtGui import (
     QFont,
     QPixmap,
-    QPainter
+    QPainter,
+    QFontDatabase,
+    QColor
 )
 from PyQt5.QtWidgets import (
     QFileDialog, QLabel, QVBoxLayout, QWidget, QPushButton, QTableWidget, 
-    QTableWidgetItem, QApplication, QHeaderView, QDialog
+    QTableWidgetItem, QApplication, QHeaderView, QDialog, QGraphicsDropShadowEffect
 )
 from PyQt5.QtCore import (
     Qt,
@@ -31,7 +31,6 @@ from PyQt5.QtCore import (
     QRect,
     QPoint
 )
-from module.getAdmin import ExecuteAsAdmin
 
 import socket
 import sys
@@ -62,10 +61,7 @@ class Main:
         self.routes()
         
     def init_server(self, directions):
-        if directions is None or directions == 0 or len(directions) <= 5:
-            self.app.run("localhost", 6780)
-        else:
-            self.app.run("localhost", 6780)
+        self.app.run("localhost", 6780)
         
     def routes(self):
         rutas(self.app, self.nombre_programa, self.instance_programs, self.full_path)
@@ -78,11 +74,11 @@ class Main:
         
         while True:
             conn, addr = self.sock.accept()
-            print("CLIENTE CONECTADO: " + addr[0] + ":" + str(addr[1]))
+            print(f"CLIENTE CONECTADO: {addr[0]} : {str(addr[1])}")
             data = conn.recv(1024).decode("utf-8").strip()
             print(f"Datos recibidos: {data}")
             
-            if len(data) <= 0 or data == None:
+            if len(data) <= 0 or data is None:
                 print("ERRROROROOROR")
             elif data.endswith("Activar"):
                 open(path.join(self.full_path, "archivo.txt"), "w").write(data[2:])
@@ -92,9 +88,9 @@ class Main:
             
                 
 class CustomWindow(QWidget):
-    def __init__(self):
+    def __init__(self, full_path):
         super().__init__()
-
+        self.full_path = full_path
         # Configuración de la ventana
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
@@ -121,6 +117,36 @@ class CustomWindow(QWidget):
         # Eventos de mouse para arrastrar la ventana
         self.main_container.mousePressEvent = self.mouse_press
         self.main_container.mouseMoveEvent = self.mouse_move
+        
+        data_font_id = QFontDatabase().addApplicationFont("static/fonts/BloodyHell.otf")
+        font_bloody = QFontDatabase().applicationFontFamilies(data_font_id)[0]
+        font = QFont(font_bloody,90,2,True)
+        
+        shadow_effect_label = QGraphicsDropShadowEffect()
+        shadow_effect_label.setBlurRadius(20)
+        shadow_effect_label.setOffset(0, 0) 
+        shadow_effect_label.setColor(Qt.white)
+        
+        self.label_text_welcome = QLabel("Halloween",self)
+        self.label_text_welcome.setFont(font)
+        self.label_text_welcome.setGeometry(50, 85, 420, 200)
+        self.label_text_welcome.setGraphicsEffect(shadow_effect_label)
+        self.label_text_welcome.setObjectName("label_text_welcome")
+        self.label_text_welcome.setStyleSheet(
+            """
+                #label_text_welcome {
+                    color: black;
+                }
+                #label_text_welcome:hover {
+                    color: white;
+                }
+            """
+        )
+        self.label_text_welcome.show()
+        
+        self.qr_label = QLabel(self)
+        self.qr_label.setGeometry(150, 340, 200, 200)
+        self.qr_label.setVisible(False)
         
         self.selected_files = {}
         
@@ -166,7 +192,8 @@ class CustomWindow(QWidget):
         self.menu_visible = False  # Estado del menú
         
         self.server_thread = None
-
+        
+        
     def painEvent(self, event):
         painer = QPainter(self.main_container)
         painer.drawPixmap(self.main_container.rect(), self.wall_image)
@@ -199,6 +226,19 @@ class CustomWindow(QWidget):
         minimize_button.setGeometry(60, 20, 30, 30)
         minimize_button.setStyleSheet("font-size: 18px;background-color: black; color: #fff; border-radius: 15px;")
         minimize_button.clicked.connect(self.showMinimized)
+        
+        shadow_effect_close = QGraphicsDropShadowEffect()
+        shadow_effect_close.setBlurRadius(20)
+        shadow_effect_close.setOffset(0, 0)
+        shadow_effect_close.setColor(Qt.white)
+        
+        shadow_effect_minimze = QGraphicsDropShadowEffect()
+        shadow_effect_minimze.setBlurRadius(20)
+        shadow_effect_minimze.setOffset(0, 0)
+        shadow_effect_minimze.setColor(Qt.black)
+        
+        minimize_button.setGraphicsEffect(shadow_effect_minimze)
+        close_button.setGraphicsEffect(shadow_effect_close)
 
     def create_start_stop_buttons(self):
         # Botón de iniciar servidor
@@ -212,6 +252,19 @@ class CustomWindow(QWidget):
         stop_button.setGeometry(260, 600, 100, 40)
         stop_button.setStyleSheet("font-style: bold;background-color: black; color: white; border-radius: 10px;font-size: 15px;")
         stop_button.clicked.connect(self.stop_server)
+        
+        shadow_effect_stop = QGraphicsDropShadowEffect()
+        shadow_effect_stop.setBlurRadius(20)
+        shadow_effect_stop.setOffset(0,0) 
+        shadow_effect_stop.setColor(Qt.black)
+        
+        shadow_effect_start = QGraphicsDropShadowEffect()
+        shadow_effect_start.setBlurRadius(20)
+        shadow_effect_start.setOffset(0,0)
+        shadow_effect_start.setColor(Qt.white)
+        
+        stop_button.setGraphicsEffect(shadow_effect_stop)
+        start_button.setGraphicsEffect(shadow_effect_start)
 
     def create_action_buttons(self):
         
@@ -250,30 +303,42 @@ class CustomWindow(QWidget):
         self.qr_button.setGeometry(150, 280, 200, 40)
         self.qr_button.setStyleSheet(style_buttons)
         self.qr_button.clicked.connect(self.show_qr_code)
+        
+        shadow_effect_qr_button = QGraphicsDropShadowEffect()
+        shadow_effect_qr_button.setBlurRadius(20)
+        shadow_effect_qr_button.setOffset(0,0)
+        shadow_effect_qr_button.setColor(QColor(90,90,90))
+        
+        self.qr_button.setGraphicsEffect(shadow_effect_qr_button)
 
     # Función para abrir diálogo de archivos
     def select_file(self):
-        options = QFileDialog.Options()
-        file, _ = QFileDialog.getOpenFileName(self, "Seleccionar Archivo .exe", "D:/", "Executable Files (*.exe);;All Files (*)", options=options)
-        if not path.exists("./esto.json"):
-            file_name = path.basename(file)
-            self.selected_files[file_name] = file
-            with open("./esto.json", "w") as f:
-                f.write("")
-                json.dump(self.selected_files, f)
-                f.close()
-        else:
-            if file:
-                file_name = path.basename(file)
-                self.selected_files[file_name] = file
-                json_loaded = ""
-                with open("./esto.json", "r") as f_json:
-                    json_loaded = json.load(f_json)
-                    f_json.close()
-                print(json_loaded)
+               
+        file, _ = QFileDialog.getOpenFileName(self,"Select the FIle that you'll open", "D:/Programas", "*.exe")
+        print(file)
+        name_file = os.path.basename(file)[:-4]
+        path_file = os.path.abspath(file)
+        
+        print(path_file, name_file)
+        # if not path.exists("./esto.json"):
+        #     file_name = path.basename(file)
+        #     self.selected_files[file_name] = file
+        #     with open("./esto.json", "w") as f:
+        #         f.write("")
+        #         json.dump(self.selected_files, f)
+        #         f.close()
+        # else:
+        #     if file:
+        #         file_name = path.basename(file)
+        #         self.selected_files[file_name] = file
+        #         json_loaded = ""
+        #         with open("./esto.json", "r") as f_json:
+        #             json_loaded = json.load(f_json)
+        #             f_json.close()
+        #         print(json_loaded)
                     
-                print(f"Archivo seleccionado: {file}")
-                print(f"Archivos seleccionados hasta ahora: {self.selected_files}")
+        #         print(f"Archivo seleccionado: {file}")
+        #         print(f"Archivos seleccionados hasta ahora: {self.selected_files}")
 
     # Función para ver lista de programas seleccionados
     def view_program_list(self):
@@ -370,11 +435,10 @@ class CustomWindow(QWidget):
             background=(222,222,222,0)
         )
 
-        qr_label = QLabel(self)
         pixmap = QPixmap("static/img/qr_code.png")
-        qr_label.setPixmap(pixmap)
-        qr_label.setGeometry(150, 340, 200, 200)
-        qr_label.show()
+        self.qr_label.setPixmap(pixmap)
+        self.qr_label.setVisible(True)
+        self.qr_label.show()
 
     # Eventos de mouse para mover la ventana
     def mouse_press(self, event):
@@ -399,8 +463,13 @@ class CustomWindow(QWidget):
         self.server_thread.stop()
         print("Servidor detenido")
 
+def getFullPath() -> str:
+    return os.getcwd()
+
 if __name__ == "__main__":
+    # run_as_admin()
     app = QApplication(sys.argv)
-    window = CustomWindow()
+    window = CustomWindow(getFullPath())
     window.show()
     sys.exit(app.exec_())
+
