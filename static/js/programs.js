@@ -2,28 +2,37 @@ document.addEventListener("DOMContentLoaded", function () {
   const programButtonsContainer = document.getElementById("program-buttons");
   const editProgramForm = document.getElementById("edit-program");
   const programNameInput = document.getElementById("program-name");
-  const saveButton = document.getElementById("save-button");
-  let currentProgram = null;
 
   // Cargar programas desde el archivo JSON
   fetch("/load_programs", { method: "GET" })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.statusText}`);
+      }
+      return response.json();
+    })
     .then((programs) => {
-      programs.forEach((program) => {
+      programButtonsContainer.innerHTML = "";
+
+      Object.entries(programs).forEach(([programName, programPath]) => {
         const btnDiv = document.createElement("div");
-        btnDiv.className = `btn ${program.name}`;
+        btnDiv.className = "program-item";
 
         const h1 = document.createElement("h1");
-        h1.className = program.name;
-        h1.textContent = program.name;
+        h1.className = programName;
+        h1.textContent = programName;
 
-        h1.addEventListener("click", (event) => openProgram(program.name));
+        h1.addEventListener("click", () => openProgram(programName));
 
         btnDiv.appendChild(h1);
         programButtonsContainer.appendChild(btnDiv);
       });
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.error("Error al cargar los programas:", error);
+      programButtonsContainer.innerHTML =
+        "<p>Error al cargar los programas.</p>";
+    });
 
   function openProgram(programName) {
     fetch("/open", {
@@ -31,12 +40,16 @@ document.addEventListener("DOMContentLoaded", function () {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: programName }),
     })
-      .then((response) => response.text())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error al abrir el programa: ${response.statusText}`);
+        }
+        return response.text();
+      })
+      .then((data) => console.log("Programa abierto:", data))
+      .catch((error) => console.error("Error al abrir el programa:", error));
   }
 
-  // Editar nombre del programa
   programButtonsContainer.addEventListener("dblclick", function (event) {
     const clickedElement = event.target;
 
@@ -46,27 +59,4 @@ document.addEventListener("DOMContentLoaded", function () {
       editProgramForm.style.display = "block";
     }
   });
-
-  // // Guardar cambios en el nombre del programa
-  // saveButton.addEventListener("click", function () {
-  //   const newName = programNameInput.value;
-
-  //   fetch("/edit_program", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ old_name: currentProgram, new_name: newName }),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.success) {
-  //         // Actualizar el nombre en la interfaz
-  //         document.querySelector(`.${currentProgram}`).textContent = newName;
-  //         document.querySelector(`.${currentProgram}`).className = newName;
-
-  //         // Ocultar el formulario de edición
-  //         editProgramForm.style.display = "none";
-  //       }
-  //     })
-  //     .catch((error) => console.log(error));
-  // });
 });

@@ -14,6 +14,7 @@ from threading import Thread
 from module.url_programs import Programs
 from module.router import rutas
 from module.getAdmin import run_as_admin
+from module.listPrograms import ListItems
 from PyQt5.QtGui import (
     QFont,
     QPixmap,
@@ -53,7 +54,6 @@ class Main:
         self.hilo_.start()
         
         self.app = Flask(__name__, static_folder=self.path_static, template_folder=self.path_template)
-        self.nombre_programa = ""
         
         self.instance_programs = Programs()
         
@@ -64,7 +64,7 @@ class Main:
         self.app.run("localhost", 6780)
         
     def routes(self):
-        rutas(self.app, self.nombre_programa, self.instance_programs, self.full_path)
+        rutas(self.app, self.instance_programs, self.full_path)
         
     def wait_for_fear(self):
         ip = socket.gethostbyname(socket.gethostname())
@@ -313,98 +313,47 @@ class CustomWindow(QWidget):
 
     # Función para abrir diálogo de archivos
     def select_file(self):
-               
-        file, _ = QFileDialog.getOpenFileName(self,"Select the FIle that you'll open", "D:/Programas", "*.exe")
-        print(file)
-        name_file = os.path.basename(file)[:-4]
-        path_file = os.path.abspath(file)
+        path_folder_config = path.join(self.full_path, "config")
+        path_file_config = path.join(path_folder_config, "config.json")
+        file, _ = QFileDialog.getOpenFileNames(self,"Select the FIle that you'll open", "D:/Programas", "*.exe")
+        print(type(file))
         
-        print(path_file, name_file)
-        # if not path.exists("./esto.json"):
-        #     file_name = path.basename(file)
-        #     self.selected_files[file_name] = file
-        #     with open("./esto.json", "w") as f:
-        #         f.write("")
-        #         json.dump(self.selected_files, f)
-        #         f.close()
-        # else:
-        #     if file:
-        #         file_name = path.basename(file)
-        #         self.selected_files[file_name] = file
-        #         json_loaded = ""
-        #         with open("./esto.json", "r") as f_json:
-        #             json_loaded = json.load(f_json)
-        #             f_json.close()
-        #         print(json_loaded)
-                    
-        #         print(f"Archivo seleccionado: {file}")
-        #         print(f"Archivos seleccionados hasta ahora: {self.selected_files}")
+        dictPrograms = {path.basename(f)[:-4]: f for f in file}
+        if not path.exists(path_folder_config):
+            try:
+                os.makedirs(path_folder_config)
+            except Exception:
+                print("Error creating folder config")
+        try:
+            with open(path_file_config, "w") as f:
+                f.write(json.dumps(dictPrograms))
+                f.close()
+        except FileNotFoundError:
+            print("ERROR")
+            
+        print(dictPrograms)
 
     # Función para ver lista de programas seleccionados
     def view_program_list(self):
-        # Crear una nueva ventana para mostrar la tabla
-        self.program_window = QWidget()
-        self.program_window.setWindowFlags(Qt.FramelessWindowHint)
-        self.program_window.setAttribute(Qt.WA_TranslucentBackground)
-        self.program_window.setWindowTitle("Programas Seleccionados")
-        self.program_window.setGeometry(600, 300, 500, 400)
+        from os import path
+        path_config_folder = path.join(self.full_path, "config")
+        path_config_file = path.join(path_config_folder, "config.json")
+        if not path.exists(path_config_folder):
+            try:
+                os.makedirs(path_config_folder)
+            except Exception:
+                print("ERROR 2 Creando Carpeta")
+        dataJson = {}
+        try:
+            with open(path_config_file, "r") as f:
+                dataJson = json.loads(f.read())
+                f.close()
+        except:
+            print("ERROR loading jsonfile")
+        print(dataJson)
         
-        def closebutton():
-            self.program_window.setVisible(False)
-        
-        self.button_close = QPushButton("x",self.program_window)
-        self.button_close.setGeometry(0, 0, 50,50)
-        self.button_close.setText("X")
-        self.button_close.setStyleSheet("background-color: #3E3E3E; color: black; border-radius: 10px;")
-        self.button_close.clicked.connect(closebutton)
-
-
-        # Crear la tabla
-        table = QTableWidget(self.program_window)
-        table.setColumnCount(2)
-        table.setHorizontalHeaderLabels(["Nombre del Archivo", "Ruta del Archivo"])
-        table.setRowCount(len(self.selected_files))
-        
-        # Agregar los archivos seleccionados a la tabla
-        for row, (name, path) in enumerate(self.selected_files.items()):
-            item_name = QTableWidgetItem(name)
-            item_name.setFlags(Qt.ItemIsEditable | Qt.ItemIsEnabled)
-            table.setItem(row, 0, item_name)
-            
-            item_path = QTableWidgetItem(path)
-            item_path.setFlags(Qt.ItemIsEnabled)
-            table.setItem(row, 1, item_path)
-
-        # Configuración de la tabla
-        table.horizontalHeader().setStretchLastSection(True)
-        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        table.setStyleSheet("""
-            QTableWidget {
-                background-color: #3E3E3E;
-                color: #FFFFFF;
-                border: none;
-            }
-            QHeaderView::section {
-                background-color: #007BFF;
-                color: #FFFFFF;
-                font-weight: bold;
-                border: none;
-                height: 30px;
-            }
-            QTableWidget::item {
-                padding: 10px;
-                border: none;
-            }
-            QTableWidget::item:selected {
-                background-color: #17A2B8;
-            }
-        """)
-
-        # Layout de la ventana de programas
-        layout = QVBoxLayout()
-        layout.addWidget(table)
-        self.program_window.setLayout(layout)
-        self.program_window.show()
+        self.programList = ListItems(dataJson, path_config_file)
+        self.programList.show()
 
     # Función para mostrar ayuda
     def show_help(self):

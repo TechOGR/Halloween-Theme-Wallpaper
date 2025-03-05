@@ -1,10 +1,11 @@
+import json
 from winotify import (
     Notification,
     audio
 )
-
 from os import (
-    system
+    system,
+    path
 )
 from subprocess import (
     Popen
@@ -27,40 +28,34 @@ class Programs:
         self.hilo_1.start()
         self.hilo_2.start()
     
-    def open_program(self,name_program = None):
-        
-        match name_program:
-            case 'qt_designer':
-                Popen(["C:\Program Files (x86)\Qt Designer\\designer.exe".replace("\\","\\\\")])
-            case 'figma':
-                Popen(["C:\\Users\\guila\\AppData\\Local\\Figma\\app-116.8.5\\Figma.exe"])
-            case 'hide':
-                Popen(["C:\Program Files (x86)\\hide.me VPN\Hide.me.exe".replace("\\","\\\\")])
-            case 'vscode':
-                Popen(["C:\\Users\\guila\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"])
-            case 'idea':
-                Popen(["C:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition 2023.2\\bin\\idea64.exe".replace("\\","\\\\")])
-            case 'aimp':
-                Popen(["C:\Program Files\AIMP\AIMP.exe".replace("\\","\\\\")])
-            case 'chrome':
-                Popen(["C:\Program Files\Google\Chrome\Application\chrome.exe".replace("\\","\\\\")])
-            case 'android':
-                Popen(["C:\Program Files\Android\Android Studio\\bin\studio64.exe".replace("\\","\\\\")])
-            case 'trashbin':
+    def open_program(self, name_program=None, fullPath=""):
+        try:
+            if name_program == 'trashbin':
+                # Limpia la papelera sin confirmación
                 system('PowerShell -Command "Clear-RecycleBin -Confirm:$false"')
-                # Popen(["powershell","-Command", "Clear-RecycleBin", "-Confirm:$false", "-Force"])
-                # system("rd /s /q C:\\$Recycle.Bin")
                 self.mostrar_notificacion()
-            case 'blender':
-                Popen(["C:\Program Files\Blender Foundation\Blender 3.6\\blender-launcher.exe".replace("\\","\\\\")])
-            case 'U_F':
-                Popen(["C:\\Users\\guila\\AppData\\Local\\Programs\\Up_Local_Cloud_Down\\Upload_Files.exe"])
-            case 'tunes':
-                Popen(["C:\Program Files\iTunes\\iTunes.exe".replace("\\","\\\\")])
-            case 'explorer':
-                Popen(["explorer.exe"])
+            else:
+                # Construye el path del archivo de configuración
+                config_file = path.join(fullPath, "config", "config.json")
+                
+                if not path.exists(config_file):
+                    print(f"Error: {config_file} no encontrado.")
+                    return
 
-    
+                # Carga la configuración desde el archivo JSON
+                with open(config_file, "r") as r:
+                    programs = json.load(r)
+
+                # Verifica si el programa existe en la lista
+                if name_program in programs:
+                    program = programs[name_program]
+                    system(f'start "{program}"')
+                else:
+                    print(f"Error: {name_program} no se encuentra en la lista de programas.")
+        except Exception as e:
+            print(f"Ocurrió un error: {e}")
+           
+           
     def mostrar_notificacion(self):
         notificacion = Notification(
             app_id="Sistema Windows",

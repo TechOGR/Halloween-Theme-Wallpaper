@@ -9,18 +9,15 @@ from flask import (
 from module.info_recycle import check_state_recycle_bin
 from module.sonidos import sonido_bruja, sonido_grito, sonido_error
 
-def rutas(app, nombre_programa, instance_programs, full_path):
-    # Ruta para exponer las imágenes
+def rutas(app, instance_programs, full_path):
     @app.route("/img/<path:filename>")
     def render_img(filename):
         return send_from_directory("static/img", filename)
     
-    # Ruta principal de inicio
     @app.route("/")
     def index():            
         return render_template("index.html")
     
-    # Ruta para abrir un programa
     @app.route("/open", methods=["POST"])
     def open_programs():
         name_program = request.json.get("name")
@@ -28,7 +25,7 @@ def rutas(app, nombre_programa, instance_programs, full_path):
             return json.jsonify({"error": "No program name provided"}), 400
         
         try:
-            instance_programs.open_program(name_program)
+            instance_programs.open_program(name_program, full_path)
             return json.jsonify({"status": "Program opened successfully"}), 200
         except Exception as e:
             return json.jsonify({"error": str(e)}), 500
@@ -81,4 +78,9 @@ def rutas(app, nombre_programa, instance_programs, full_path):
     
     @app.route("/load_programs")
     def loadPrograms():
-        return {"Good", "Hola"}
+        data = {}
+        with open(path.join(full_path,"config", "config.json"), "r") as f:
+            data = json.loads(f.read())
+            f.close()
+        print(data)
+        return data
